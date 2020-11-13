@@ -14,6 +14,11 @@ import {
   RadioGroup
 } from '@material-ui/core'
 import { toast } from 'react-toastify'
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider
+} from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns'
 import { Visibility, VisibilityOff } from '@material-ui/icons'
 import { Link, useHistory } from 'react-router-dom'
 import { request } from '../../helpers/request'
@@ -64,7 +69,7 @@ export default function RegisterForm() {
     city: '',
     email: '',
     phone: '',
-    birthday: '',
+    birthday: null,
     userName: '',
     password: '',
     repeatPass: '',
@@ -76,6 +81,10 @@ export default function RegisterForm() {
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value })
+  }
+
+  const handleChangeDate = (date) => {
+    setValues({ ...values, birthday: date })
   }
 
   const handleFirstName = (event) => {
@@ -287,270 +296,275 @@ export default function RegisterForm() {
   }
 
   return (
-    <Paper className={classes.container}>
-      <Typography variant="h4" className={classes.header}>
-        Sign Up{' '}
-      </Typography>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <Paper className={classes.container}>
+        <Typography variant="h4" className={classes.header}>
+          Sign Up{' '}
+        </Typography>
 
-      <form onSubmit={handleSubmitForm} className={classes.registerForm}>
-        <div className={classes.gender}>
-          <RadioGroup
-            aria-label="gender"
-            name="gender1"
-            value={values.gender}
-            onChange={handleChange('gender')}
-          >
-            <FormControlLabel
-              value="female"
-              control={<Radio color="primary" />}
-              label="Female"
-            />
-            <FormControlLabel
-              value="male"
-              control={<Radio color="primary" />}
-              label="Male"
-            />
-          </RadioGroup>
-        </div>
-        <Divider variant="fullWidth" />
+        <form onSubmit={handleSubmitForm} className={classes.registerForm}>
+          <div className={classes.gender}>
+            <RadioGroup
+              aria-label="gender"
+              name="gender"
+              value={values.gender}
+              onChange={handleChange('gender')}
+            >
+              <FormControlLabel
+                value="female"
+                control={<Radio color="primary" />}
+                label="Female"
+              />
+              <FormControlLabel
+                value="male"
+                control={<Radio color="primary" />}
+                label="Male"
+              />
+            </RadioGroup>
+          </div>
+          <Divider variant="fullWidth" />
 
-        <TextField
-          variant="outlined"
-          name="firstName"
-          className={classes.textfieldInfoRegister}
-          required
-          label="First name"
-          value={values.name}
-          onChange={handleChange('firstName')}
-          onBlur={handleFirstName}
-          fullWidth
-          error={fNameErr}
-          helperText={firstNameErrorText}
-          // InputProps={{
-          //     classes: {
-          //       input: classes.resize,
-          //     },
-          //   }}
-        />
-
-        <TextField
-          variant="outlined"
-          name="lastName"
-          className={classes.textfieldInfoRegister}
-          required
-          label="Last name"
-          value={values.lastName}
-          onChange={handleChange('lastName')}
-          onBlur={handleLastName}
-          fullWidth
-          error={lastNameErr}
-          helperText={lastNameErrorText}
-        />
-        <div>
           <TextField
             variant="outlined"
-            name="phone"
-            className={classes.phone}
+            name="firstName"
+            className={classes.textfieldInfoRegister}
             required
-            label="Phone"
-            value={values.phone}
-            onChange={handleChange('phone')}
-            onBlur={handlePhone}
-            error={phoneErr}
-            helperText={phoneErrorText}
+            label="First name"
+            value={values.name}
+            onChange={handleChange('firstName')}
+            onBlur={handleFirstName}
             fullWidth
+            error={fNameErr}
+            helperText={firstNameErrorText}
+            // InputProps={{
+            //     classes: {
+            //       input: classes.resize,
+            //     },
+            //   }}
           />
+
           <TextField
             variant="outlined"
-            name="birthday"
-            className={classes.birthday}
+            name="lastName"
+            className={classes.textfieldInfoRegister}
             required
-            label="Birthday"
-            value={values.birthday}
-            onChange={handleChange('birthday')}
-            onBlur={handleBirthday}
-            error={birthdayErr}
-            helperText={birthdayErrorText}
+            label="Last name"
+            value={values.lastName}
+            onChange={handleChange('lastName')}
+            onBlur={handleLastName}
             fullWidth
-            type="date"
+            error={lastNameErr}
+            helperText={lastNameErrorText}
           />
-        </div>
-        <div>
-          <TextField
-            variant="outlined"
-            name="street"
-            className={classes.street}
-            required
-            label="Street"
-            value={values.street}
-            onChange={handleChange('street')}
-            onBlur={handleStreet}
-            error={streetErr}
-            helperText={streetErrorText}
-          />
-          <TextField
-            variant="outlined"
-            name="streetNumber"
-            className={classes.streetNumber}
-            required
-            label="Nr"
-            value={values.streetNumber}
-            onChange={handleChange('streetNumber')}
-            onBlur={handleStreetNumber}
-            error={streetNumberErr}
-            helperText={streetNumberErrorText}
-          />
-        </div>
-
-        <TextField
-          variant="outlined"
-          name="additionalAddress"
-          className={classes.textfieldInfoRegister}
-          label="Additional address"
-          value={values.additionalAddress}
-          onChange={handleChange('additionalAddress')}
-          // onBlur = { handleadditionalAddress}
-          // error = { additionalAddressErr }
-          // helperText = { additionalAddressErrorText }
-
-          fullWidth
-        />
-
-        <div>
-          <TextField
-            variant="outlined"
-            name="postCode"
-            className={classes.postCode}
-            required
-            label="ZIP"
-            value={values.postCode}
-            onChange={handleChange('postCode')}
-            onBlur={handlePostCode}
-            error={postCodeErr}
-            helperText={postCodeErrorText}
-          />
-          <TextField
-            variant="outlined"
-            name="city"
-            className={classes.city}
-            required
-            label="City"
-            value={values.city}
-            onChange={handleChange('city')}
-            onBlur={handleCity}
-            error={cityErr}
-            helperText={cityErrorText}
-          />
-        </div>
-        <TextField
-          variant="outlined"
-          name="email"
-          required
-          className={classes.textfieldInfoRegister}
-          label="Email"
-          value={values.email}
-          onChange={handleChange('email')}
-          onBlur={handleChangeEmail}
-          fullWidth
-          error={emailError}
-          helperText={emailErrorText}
-        />
-
-        <TextField
-          variant="outlined"
-          name="userName"
-          className={classes.textfieldInfoRegister}
-          required
-          label="User name"
-          value={values.username}
-          onChange={handleChange('userName')}
-          onBlur={handleUserName}
-          fullWidth
-          error={userNameError}
-          helperText={userNameErrorText}
-        />
-
-        <TextField
-          variant="outlined"
-          name="password"
-          className={classes.textfieldInfoRegister}
-          required
-          label="Password"
-          fullWidth
-          value={values.password}
-          onChange={handleChange('password')}
-          onBlur={handlePassword}
-          error={passError}
-          helperText={passErrorText}
-          type={values.showPassword ? 'text' : 'password'}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={handleClickShowPassword}>
-                  {' '}
-                  {values.showPassword ? (
-                    <Visibility />
-                  ) : (
-                    <VisibilityOff />
-                  )}{' '}
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-        />
-        <TextField
-          variant="outlined"
-          name="repeatPass"
-          className={classes.textfieldInfoRegister}
-          required
-          label="Repeat Password"
-          fullWidth
-          value={values.repeatPass}
-          onChange={handleChange('repeatPass')}
-          onBlur={handleRepeatPassword}
-          error={repeatPassError}
-          helperText={repeatPassErrorText}
-          type={values.showRepeatPass ? 'text' : 'password'}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={handleShowRepeatPass}>
-                  {' '}
-                  {values.showRepeatPass ? <Visibility /> : <VisibilityOff />}
-                </IconButton>{' '}
-              </InputAdornment>
-            )
-          }}
-        />
-
-        <Button
-          type="submit"
-          className={classes.signUpButton}
-          variant="contained"
-          color="primary"
-          fullWidth
-        >
-          Sign Up
-        </Button>
-        <FormControlLabel
-          className={classes.agreeTerm}
-          control={
-            <Checkbox
-              checked={values.agreetrm}
-              onChange={handleChange('agreeterm')}
-              color="primary"
+          <div>
+            <TextField
+              variant="outlined"
+              name="phone"
+              className={classes.phone}
               required
+              label="Phone"
+              value={values.phone}
+              onChange={handleChange('phone')}
+              onBlur={handlePhone}
+              error={phoneErr}
+              helperText={phoneErrorText}
+              fullWidth
             />
-          }
-          label="I agree to the Terms of Users"
-        />
-        <div className={classes.textHaveAccount}>
-          Do you have an account ?
-          <span className={classes.signIn}>
-            <Link to="/loginForm"> Sign In </Link>
-          </span>
-        </div>
-      </form>
-    </Paper>
+            <KeyboardDatePicker
+              name="birthday"
+              format="dd/MM/yyyy"
+              value={values.birthday}
+              inputVariant="outlined"
+              onChange={handleChangeDate}
+              label="Birthday"
+              onBlur={handleBirthday}
+              className={classes.birthday}
+              required
+              KeyboardButtonProps={{
+                'aria-label': 'change date'
+              }}
+              error={birthdayErr}
+              helperText={birthdayErrorText}
+              fullWidth
+            />
+          </div>
+          <div>
+            <TextField
+              variant="outlined"
+              name="street"
+              className={classes.street}
+              required
+              label="Street"
+              value={values.street}
+              onChange={handleChange('street')}
+              onBlur={handleStreet}
+              error={streetErr}
+              helperText={streetErrorText}
+            />
+            <TextField
+              variant="outlined"
+              name="streetNumber"
+              className={classes.streetNumber}
+              required
+              label="Nr"
+              value={values.streetNumber}
+              onChange={handleChange('streetNumber')}
+              onBlur={handleStreetNumber}
+              error={streetNumberErr}
+              helperText={streetNumberErrorText}
+            />
+          </div>
+
+          <TextField
+            variant="outlined"
+            name="additionalAddress"
+            className={classes.textfieldInfoRegister}
+            label="Additional address"
+            value={values.additionalAddress}
+            onChange={handleChange('additionalAddress')}
+            // onBlur = { handleadditionalAddress}
+            // error = { additionalAddressErr }
+            // helperText = { additionalAddressErrorText }
+
+            fullWidth
+          />
+
+          <div>
+            <TextField
+              variant="outlined"
+              name="postCode"
+              className={classes.postCode}
+              required
+              label="ZIP"
+              value={values.postCode}
+              onChange={handleChange('postCode')}
+              onBlur={handlePostCode}
+              error={postCodeErr}
+              helperText={postCodeErrorText}
+            />
+            <TextField
+              variant="outlined"
+              name="city"
+              className={classes.city}
+              required
+              label="City"
+              value={values.city}
+              onChange={handleChange('city')}
+              onBlur={handleCity}
+              error={cityErr}
+              helperText={cityErrorText}
+            />
+          </div>
+          <TextField
+            variant="outlined"
+            name="email"
+            required
+            className={classes.textfieldInfoRegister}
+            label="Email"
+            value={values.email}
+            onChange={handleChange('email')}
+            onBlur={handleChangeEmail}
+            fullWidth
+            error={emailError}
+            helperText={emailErrorText}
+          />
+
+          <TextField
+            variant="outlined"
+            name="userName"
+            className={classes.textfieldInfoRegister}
+            required
+            label="User name"
+            value={values.username}
+            onChange={handleChange('userName')}
+            onBlur={handleUserName}
+            fullWidth
+            error={userNameError}
+            helperText={userNameErrorText}
+          />
+
+          <TextField
+            variant="outlined"
+            name="password"
+            className={classes.textfieldInfoRegister}
+            required
+            label="Password"
+            fullWidth
+            value={values.password}
+            onChange={handleChange('password')}
+            onBlur={handlePassword}
+            error={passError}
+            helperText={passErrorText}
+            type={values.showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleClickShowPassword}>
+                    {' '}
+                    {values.showPassword ? (
+                      <Visibility />
+                    ) : (
+                      <VisibilityOff />
+                    )}{' '}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+          />
+          <TextField
+            variant="outlined"
+            name="repeatPass"
+            className={classes.textfieldInfoRegister}
+            required
+            label="Repeat Password"
+            fullWidth
+            value={values.repeatPass}
+            onChange={handleChange('repeatPass')}
+            onBlur={handleRepeatPassword}
+            error={repeatPassError}
+            helperText={repeatPassErrorText}
+            type={values.showRepeatPass ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleShowRepeatPass}>
+                    {' '}
+                    {values.showRepeatPass ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>{' '}
+                </InputAdornment>
+              )
+            }}
+          />
+
+          <Button
+            type="submit"
+            className={classes.signUpButton}
+            variant="contained"
+            color="primary"
+            fullWidth
+          >
+            Sign Up
+          </Button>
+          <FormControlLabel
+            className={classes.agreeTerm}
+            control={
+              <Checkbox
+                checked={values.agreetrm}
+                onChange={handleChange('agreeterm')}
+                color="primary"
+                required
+              />
+            }
+            label="I agree to the Terms of Users"
+          />
+          <div className={classes.textHaveAccount}>
+            Do you have an account ?
+            <span className={classes.signIn}>
+              <Link to="/loginForm"> Sign In </Link>
+            </span>
+          </div>
+        </form>
+      </Paper>
+    </MuiPickersUtilsProvider>
   )
 }
