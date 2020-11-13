@@ -1,10 +1,10 @@
-import React from "react";
-import { ToastContainer } from "react-toastify";
+import React from 'react'
+import { ToastContainer } from 'react-toastify'
 
 export default function CustomToast() {
   return (
     <ToastContainer
-      position='bottom-center'
+      position="bottom-center"
       autoClose={5000}
       hideProgressBar={false}
       newestOnTop={false}
@@ -14,5 +14,5 @@ export default function CustomToast() {
       draggable
       pauseOnHover
     />
-  );
+  )
 }

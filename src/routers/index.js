@@ -1,17 +1,17 @@
-import React from "react";
-import MainRouter from "./MainRouter";
-import UserPanelRouter from "./UserPanelRouter";
-import { Route } from "react-router-dom";
+import React from 'react'
+import { Route } from 'react-router-dom'
+import MainRouter from './MainRouter'
+import UserPanelRouter from './UserPanelRouter'
 
 export default function Routers() {
   return (
     <>
-      <Route path='/profile'>
+      <Route path="/profile">
         <UserPanelRouter />
       </Route>
-      <Route path='/'>
+      <Route path="/">
         <MainRouter />
       </Route>
     </>
-  );
+  )
 }
