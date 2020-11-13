@@ -19,8 +19,12 @@ export const validationSchema = Yup.object({
     .required('Email is required'),
   birthday: Yup.date('Enter your birthday').required('Birthday is required'),
   password: Yup.string('')
-    .min(8, 'Password must contain at least 8 characters')
-    .required('Enter your password'),
+    // .min(8, 'Password must contain at least 8 characters')
+    .required('Enter your password')
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      'Must Contain 8 Characters, One letter, One Number and one special case Character'
+    ),
   repeatPass: Yup.string('Enter your password')
     .required('Confirm your password')
     .oneOf([Yup.ref('password')], 'Password does not match'),
