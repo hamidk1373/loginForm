@@ -1,4 +1,4 @@
-import {  makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 // import { createMuiTheme } from '@material-ui/core/styles'
 // import Button from '@material-ui/core/Button'
 
@@ -16,104 +16,162 @@ import {  makeStyles } from '@material-ui/core/styles'
 //                 height: 40,
 //                 padding: '0 30px',
 //                 boxShadow: '1px 1px 3px 2px rgba(255, 105, 135, .3)',
-               
+
 //                 // position:'absolute',
 //                 // left:50,
 //                 // top:420,
 //                 outline:'none !important',
 //                 width:'20rem', 
 //                 fontSize:20,
-               
+
 //             },
-    
+
 //         },
 //       },
 //     },
 //   );
 
-  
 
 
 
-export const useStyles = makeStyles({
-    
-    container:{
-        margin: '0 auto',
-        width: 403,
-        position: 'relative',
-        
-    },
 
-    loginForm:{
-        border: '1px solid #c5c1c9',
-        height:450,
-        width:336,  
+export const useStyles = makeStyles((theme) => ({
+
+    container: {
+
+        margin: "0 auto",
+        width: "30vw",
         marginTop: 120,
-        padding: '63px 40px 0px;',
-        borderRadius: '.8rem', 
+        padding: "30px 40px 20px",
+        [theme.breakpoints.down("lg")]: {
+            width: "30vw",
+        },
+        [theme.breakpoints.down("md")]: {
+            width: "55vw",
+        },
+        [theme.breakpoints.down("sm")]: {
+            width: "65vw",
+        },
+        [theme.breakpoints.down("xs")]: {
+            width: "70vw",
+            marginTop: 20,
+            padding: "20px 30px 10px",
+        },
     },
 
-    header:{
-        position:'absolute',
-        marginTop:10,
-        marginLeft:155,
-        fontWeight: 'bold',
-        fontSize:30,
-        color:'#4a148c',
+
+    registerForm: {
+
+    },
+    gender: {
+
+    },
+    header: {
+        textAlign: "center",
+        color: "#4a148c",
+        [theme.breakpoints.down("xs")]: {
+            fontSize: 20
+        },
     },
 
-    fullName:{
-        width:'21rem',  
+    textfieldInfoRegister: {
+
+        marginTop: '1.1rem',
+        [theme.breakpoints.down("xs")]: {
+
+        },
     },
 
-    address:{
-        width:'21rem', 
+    // resize: {
+    //     fontSize: 5
+    // },
+    street: {
+        marginTop: '1.1rem',
+        width: '78%',
+        marginRight: '2%',
+        [theme.breakpoints.down("xs")]: {
+            width: '68%'
+        },
     },
 
-    username:{
-        width:'21rem',  
+    streetNumber: {
+        marginTop: '1.1rem',
+        width: '20%',
+        [theme.breakpoints.down("xs")]: {
+            width: '30%'
+        },
     },
 
-    password:{
-        width:'21rem',    
+    postCode: {
+        marginTop: '1.1rem',
+        width: '20%',
+        marginRight: '2%',
+        [theme.breakpoints.down("xs")]: {
+            width: '30%'
+        },
     },
 
-    
-
-    signUpButton:{
-        
-        minHeight: '44px',
-        padding: 0,
-        border: 0,
-        marginTop:10,
-        outline:'none !important',
-        width:'21rem',
-        fontSize:18, 
-        borderRadius:'1rem',
-        background:'linear-gradient(45deg, #4dd0e1 30%, #9c27b0 90%)',
+    city: {
+        marginTop: '1.1rem',
+        width: '78%',
+        [theme.breakpoints.down("xs")]: {
+            width: '68%'
+        },
     },
 
-    textBottom:{
-        position:'absolute',
-        top: 475,
-        left: 90,
+    phone: {
+        marginTop: '1.1rem',
+        marginRight: '2%',
+        width: '49%',
+        [theme.breakpoints.down("xs")]: {
+            width: '48%',
+            marginRight: '4%',
+        },
+
     },
 
-    signInUp:{
-        position:'absolute',
-        top:475,
-        left:280,
-        cursor:'pointer'
+
+    birthday: {
+        marginTop: '1.1rem',
+        width: '49%',
+        [theme.breakpoints.down("xs")]: {
+            width: '48%'
+        },
+    },
+    signUpButton: {
+
+        background: "linear-gradient(45deg, #4dd0e1 30%, #9c27b0 90%)",
+        borderRadius: "1rem !important",
+        fontSize: "15px !important",
+        marginTop: "20px!important",
     },
 
-          
-    agreeTerm:{
-        marginTop: 15,
-        marginLeft: 32,
+    textHaveAccount: {
+        marginTop: 16,
+        textAlign: "center",
+        color: "grey",
+        [theme.breakpoints.down("xs")]: {
+            fontSize: 14,
+        },
     },
-    
-    svg:{
-    transform: 'none',
-    transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+
+    signIn: {
+        marginLeft: 10,
+        cursor: 'pointer'
+    },
+
+
+    agreeTerm: {
+        textAlign: "center",
+        marginTop: 8,
+        [theme.breakpoints.down("xs")]: {
+            fontSize: 13
+        },
+
+    },
+
+    svg: {
+        transform: 'none',
+        transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
     }
-});
+}));

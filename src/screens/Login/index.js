@@ -11,6 +11,7 @@ import {
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import { request } from "../../helpers/request";
 
 export default function LoginForm() {
   const classes = useStyles();
@@ -20,7 +21,9 @@ export default function LoginForm() {
     password: "",
     showPassword: false,
   });
-
+  if (localStorage.token) {
+    history.replace("/home");
+  }
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -35,33 +38,19 @@ export default function LoginForm() {
       email: values.email,
       password: values.password,
     };
-    let statusCode;
-    fetch("http://localhost:11111/auth/login", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then((response) => {
-        statusCode = response.status;
-        return response.json();
-      })
-      .then((JSONResponse) => {
+    request("/auth/login", "POST", data).then(
+      ({ statusCode, JSONResponse }) => {
         if (statusCode === 200) {
           toast.success(JSONResponse.data.message);
           localStorage.token = JSONResponse.data.token;
-          history.push("/home");
+          history.replace("/home");
         } else if (statusCode === 404) {
           toast.error(JSONResponse.message);
         } else {
           toast.error(JSONResponse.message);
         }
-      })
-      .catch((error) => {
-        toast.error("Server error!!!");
-      });
+      }
+    );
   };
 
   return (
