@@ -21,5 +21,9 @@ export function request(endpoint, method, body) {
     })
     .catch(() => {
       toast.error('Server error!!!')
+      return {
+        statusCode: 500,
+        JSONResponse: {}
+      }
     })
 }
