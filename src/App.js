@@ -4,13 +4,16 @@ import { BrowserRouter } from 'react-router-dom'
 import CustomToast from './components/CustomToast'
 import Routers from './routers'
 import './App.css'
+import AuthorizationContextProvider from './contexts/Authorization'
 
 function App() {
   return (
-    <BrowserRouter>
-      <CustomToast />
-      <Routers />
-    </BrowserRouter>
+    <AuthorizationContextProvider>
+      <BrowserRouter>
+        <CustomToast />
+        <Routers />
+      </BrowserRouter>
+    </AuthorizationContextProvider>
   )
 }
 

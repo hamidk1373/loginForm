@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   TextField,
   IconButton,
@@ -12,6 +12,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useStyles } from './loginForm.style'
 import { request } from '../../helpers/request'
+import { AuthorizationContext } from '../../contexts/Authorization'
 
 export default function LoginForm() {
   const classes = useStyles()
@@ -21,7 +22,10 @@ export default function LoginForm() {
     password: '',
     showPassword: false
   })
-  if (localStorage.token) {
+
+  const { setIsLoggedIn, isLoggedIn } = useContext(AuthorizationContext)
+
+  if (isLoggedIn) {
     history.replace('/home')
   }
   const handleChange = (prop) => (event) => {
@@ -43,6 +47,7 @@ export default function LoginForm() {
         if (statusCode === 200) {
           toast.success(JSONResponse.data.message)
           localStorage.token = JSONResponse.data.token
+          setIsLoggedIn(true)
           history.replace('/home')
         } else if (statusCode === 404) {
           toast.error(JSONResponse.message)

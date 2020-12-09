@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Route, useHistory, Switch } from 'react-router-dom'
+import { AuthorizationContext } from '../contexts/Authorization'
 
 export default function UserPanelRouter() {
   const history = useHistory()
-  if (!localStorage.token) {
+
+  const { isLoggedIn } = useContext(AuthorizationContext)
+
+  if (!isLoggedIn) {
     history.replace('/loginForm')
   }
   return (
